@@ -16,7 +16,7 @@ void display_prompt(void)
 int main(void)
 {
 	char command[MAX_COMMAND_LENGTH];
-	pid_t pid
+	pid_t pid;
 	while (1)
 	{
 		display_prompt();
