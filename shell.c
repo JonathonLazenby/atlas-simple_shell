@@ -16,7 +16,7 @@ void display_prompt(void)
 int main(void)
 {
 	char command[MAX_COMMAND_LENGTH];
-
+	pid_t pid
 	while (1)
 	{
 		display_prompt();
@@ -27,7 +27,6 @@ int main(void)
 			break;
 		}
 		command[strcspn(command, "\n")] = '\0';
-		pid_t pid;
 		pid = fork();
 		if (pid < 0)
 		{
