@@ -1,48 +1,78 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <string.h>
 
-#define MAX_COMMAND_LENGTH 100
+/**
+ *
+ *
+ *
+ *
+ *
+ */
 
-void display_prompt(void)
+void main(void)
 {
-	printf("$ ");
-	fflush(stdout);
-}
-
-int main(void)
-{
-	char command[MAX_COMMAND_LENGTH];
-	pid_t pid;
+	char *cmd = NULL, *cmd_cpy = NULL, *token = NULL;
+	char *delim = " \n";
+	size_t n = 0;
+	int argc = 0, i = 0, status, line;
+	char **argv = NULL;
+	pid_t child_pid;
 	while (1)
 	{
-		display_prompt();
+	printf("$ ");
+	line = getline(&cmd, &n, stdin);
+	if (line == -1)
+	{
+		exit(EXIT_SUCCESS);
+	}
+	 cmd_cpy = strdup(cmd);
 
-		if (fgets(command, MAX_COMMAND_LENGTH, stdin) == NULL)
+	token = strtok(cmd, delim);
+
+	while (token)
+	{
+		token = strtok(NULL, delim);
+		argc++;
+	}
+
+	argv = malloc(sizeof(char *) * argc);
+
+	token = strtok(cmd_cpy, delim);
+
+	while (token)
+	{
+		argv[i] = token;
+		token = strtok(NULL, delim);
+		i++;
+	}
+	argv[i] = NULL;
+	child_pid = fork();
+	
+	if (child_pid == -1)
+	{
+		exit(EXIT_FAILURE);
+	}
+
+	if (child_pid == 0)
+	{
+		if (execve(argv[0], argv, NULL) == -1)
 		{
-			break;
-		}
-		command[strcspn(command, "\n")] = '\0';
-		pid = fork();
-		if (pid < 0)
-		{
-			perror("fork");
+			perror("Error command not found.");
 			exit(EXIT_FAILURE);
-		}
-		else if (pid == 0)
-        	{
-            		execlp(command, command, NULL);
-			fprintf(stderr, "Command '%s' not found\n", command);
-			exit(EXIT_FAILURE);
-		}
-		else
-		{
-		int status;
-		waitpid(pid, &status, 0);
 		}
 	}
-	return 0;
+
+	else
+	{
+		wait(&status);
+	}
+	i = 0;
+	free(argv);
+	free(cmd);
+	free(cmd_cpy);
+	}	
 }
