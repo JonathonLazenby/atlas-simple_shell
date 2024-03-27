@@ -13,7 +13,7 @@
  *
  */
 
-void main(void)
+int  main(void)
 {
 	char *cmd = NULL, *cmd_cpy = NULL, *token = NULL;
 	char *delim = " \n";
@@ -74,5 +74,8 @@ void main(void)
 	free(argv);
 	free(cmd);
 	free(cmd_cpy);
-	}	
+	}
+
+return(0);
+
 }
