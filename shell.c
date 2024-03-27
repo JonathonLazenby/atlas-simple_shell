@@ -23,7 +23,6 @@ int main(void)
 
 		if (fgets(command, MAX_COMMAND_LENGTH, stdin) == NULL)
 		{
-			printf("\nExiting shell.\n");
 			break;
 		}
 		command[strcspn(command, "\n")] = '\0';
