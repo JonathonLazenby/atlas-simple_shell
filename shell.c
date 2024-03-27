@@ -23,7 +23,10 @@ int  main(void)
 	pid_t child_pid;
 	while (1)
 	{
-	printf("$ ");
+		if (isatty(STDIN_FILENO))
+		{
+			printf("$ ");
+		}
 	line = getline(&cmd, &n, stdin);
 	if (line == -1)
 	{
