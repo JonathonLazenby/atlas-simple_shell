@@ -33,7 +33,7 @@ int main(void)
 				exit(EXIT_SUCCESS);
 			}
 		}
-		command[strcspn(command, " \n")] = '\0';
+		command[strcspn(command, "\n")] = '\0';
 		pid = fork();
 		if (pid < 0)
 		{
