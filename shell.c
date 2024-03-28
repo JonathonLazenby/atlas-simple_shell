@@ -15,10 +15,12 @@ void display_prompt(void)
 
 int main(void)
 {
-	char *command = NULL;
+	char *command = NULL, *token = NULL;
 	size_t n = 0;
 	pid_t pid;
-	size_t len; 
+	size_t len;
+	int argc = 0, i = 0;
+	char **argv = NULL;
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
@@ -38,11 +40,36 @@ int main(void)
 			command[len - 1] = '\0';
 		}
 
+		token = strtok(command, " ");
+		while (token)
+		{
+			argc++;
+			token = strtok(NULL, " ");
+		}
+		
+		strtok(command, " ");
+		
+		argv = malloc(sizeof(char *) * (argc + 1));
+
+		if (argv == NULL)
+		{
+			perror("Memory alloc failed\n");
+			free(command);
+			exit(EXIT_FAILURE);
+		}
+
+		for (i = 0; i < argc; i++)
+		{
+			argv[i] = strtok(NULL, " ");
+		}
+		argv[argc] = NULL;
+
 		pid = fork();
 		if (pid < 0)
 		{
 			perror("fork");
 			free(command);
+			free(argv);
 			exit(EXIT_FAILURE);
 		}
 		else if (pid == 0)
@@ -50,6 +77,7 @@ int main(void)
             		execlp(command, command, NULL);
 			fprintf(stderr, "Command '%s' not found\n", command);
 			free(command);
+			free(argv);
 			exit(EXIT_FAILURE);
 
 		}
@@ -58,9 +86,11 @@ int main(void)
 		int status;
 		waitpid(pid, &status, 0);
 		free(command);
+		free(argv);
 		command = NULL;
 		n = 0;
 		}
+		
 	}
 	return 0;
 }
