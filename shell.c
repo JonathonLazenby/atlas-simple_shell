@@ -30,7 +30,6 @@ int  main(void)
 	line = getline(&cmd, &n, stdin);
 	if (line == -1)
 	{
-		printf("\n");
 		exit(EXIT_SUCCESS);
 	}
 
