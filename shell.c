@@ -27,7 +27,7 @@ int main(void)
 
 		if (fgets(command, MAX_COMMAND_LENGTH, stdin) == NULL)
 		{
-			if (feof(stdin) || (isatty(STDIN_FILENO)))
+			if (feof(stdin))
 			{
 				printf("\n");
 				exit(EXIT_SUCCESS);
