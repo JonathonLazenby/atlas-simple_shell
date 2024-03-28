@@ -5,7 +5,7 @@
 #include <sys/wait.h>
 #include <string.h>
 
-#define MAX_COMMAND_LENGTH 100
+/* #define MAX_COMMAND_LENGTH 100 */
 
 void display_prompt(void)
 {
@@ -15,7 +15,8 @@ void display_prompt(void)
 
 int main(void)
 {
-	char command[MAX_COMMAND_LENGTH];
+	char *command;
+	size_t n = 0;
 	pid_t pid;
 	while (1)
 	{
@@ -25,30 +26,40 @@ int main(void)
 		display_prompt();
 		}
 
-		if (fgets(command, MAX_COMMAND_LENGTH, stdin) == NULL)
+		if (getline(&command, &n, stdin) == -1)
 		{
-			if (feof(stdin))
-			{
-				exit(EXIT_SUCCESS);
-			}
+			free(command);
+			exit(EXIT_SUCCESS);
 		}
-		command[strcspn(command, "\n")] = '\0';
+	
+		size_t len = strlen(command);
+		if (len > 0 && command[len - 1] == '\n')
+		{
+			command[len - 1] = '\0';
+		}
+
 		pid = fork();
 		if (pid < 0)
 		{
 			perror("fork");
+			free(command);
 			exit(EXIT_FAILURE);
 		}
 		else if (pid == 0)
         	{
             		execlp(command, command, NULL);
 			fprintf(stderr, "Command '%s' not found\n", command);
+			free(command);
 			exit(EXIT_FAILURE);
+
 		}
 		else
 		{
 		int status;
 		waitpid(pid, &status, 0);
+		free(command);
+		command = NULL;
+		n = 0;
 		}
 	}
 	return 0;
