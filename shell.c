@@ -18,6 +18,7 @@ int main(void)
 	char *command;
 	size_t n = 0;
 	pid_t pid;
+	size_t len; 
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
@@ -31,7 +32,6 @@ int main(void)
 			free(command);
 			exit(EXIT_SUCCESS);
 		}
-		size_t len; 
 		len = strlen(command);
 		if (len > 0 && command[len - 1] == '\n')
 		{
