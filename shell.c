@@ -48,7 +48,7 @@ int  main(void)
 	while (token)
 	{
 
-		argv[i] = strdup(token);
+		argv[i] = token;
 		if (argv[i] == NULL)
 		{
 			perror("argv[i] strdup(token); failed");
