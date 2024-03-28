@@ -15,7 +15,7 @@ void display_prompt(void)
 
 int main(void)
 {
-	char *command;
+	char *command = NULL;
 	size_t n = 0;
 	pid_t pid;
 	size_t len; 
