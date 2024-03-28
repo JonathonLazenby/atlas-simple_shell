@@ -31,8 +31,8 @@ int main(void)
 			free(command);
 			exit(EXIT_SUCCESS);
 		}
-	
-		size_t len = strlen(command);
+		size_t len; 
+		len = strlen(command);
 		if (len > 0 && command[len - 1] == '\n')
 		{
 			command[len - 1] = '\0';
