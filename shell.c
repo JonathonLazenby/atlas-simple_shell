@@ -33,8 +33,8 @@ int  main(void)
 		exit(EXIT_SUCCESS);
 	}
 
-	cmd_cpy = strdup(cmd);
-
+	cmd_cpy = malloc(sizeof(char *) * n);
+	strcpy(cmd_cpy, cmd);
 	token = strtok(cmd, delim);
 	while (token)
 	{
@@ -84,7 +84,7 @@ int  main(void)
 	free(argv);
 	
 	}
-
+free(cmd_cpy);
 return(0);
 
 }
