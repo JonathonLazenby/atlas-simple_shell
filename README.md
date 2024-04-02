@@ -28,7 +28,7 @@ Open Source for Atlas school project no license needed.
 # Authors 
 
 - Kiko Sprague <ksprague0592@gmail.com>
-- Jonathon Lazenby <>
+- Jonathon Lazenby <laezenbyjonathon@gmail.com>
 
 # Project Status
 Currently at a halt would like to work on it more in the future to get it to do what it should be doing now.
