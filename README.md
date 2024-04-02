@@ -10,9 +10,9 @@ for example: user enters ls and executes to see a list of current files/director
 To showcase what we have learned in these last few months, while also showing where we can improve. 
 
 # Included Files
-Shell.c - super simple shell
-README.md - Introduction, description, and general information.
-
+- Shell.c - super simple shell
+- README.md - Introduction, description, and general information.
+- shell3 - Another earlier version of super simple shell to help with some problmes in Shell.c that we were stuck on.
 # Installation
 - Clone current Repo
 - cd to atlas-simple_shell
